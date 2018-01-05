@@ -7,8 +7,8 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
-const char* ssid = "UPC4442DD8";
-const char* password = "zu62uavSwmdn";
+const char* ssid = "ssid";
+const char* password = "pass";
 const IPAddress LocalIPAdress = IPAddress(192,168,0,131);
 int LED = BUILTIN_LED;
 int Vel = 1000;
