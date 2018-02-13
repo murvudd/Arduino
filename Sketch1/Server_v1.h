@@ -9,33 +9,32 @@
 
 const char* ssid = "ssid";
 const char* password = "pass";
-const IPAddress LocalIPAdress = IPAddress(192, 168, 0, 131);
+const IPAddress LocalIPAdress = IPAddress(192,168,0,131);
 int LED = BUILTIN_LED;
 int Vel = 1000;
 int gpio0_pin = 0;
 int gpio2_pin = 2;
 
 // ESP8266WebServer server(LocalIPAdress,80);
-ESP8266WebServer server(LocalIPAdress, 80);
+ESP8266WebServer server(LocalIPAdress,80);
 String webPage = "";
-String RootText = "<h1>Hello from esp8266 �濟����!</h1>\n<p></p>";
+String RootText = "<h1>Hello from esp8266 śćżźąńółę!</h1>\n<p></p>";
 String indexPage = "<h1>Index Page</h1>\n<p></p>";
-WiFiClient client;
 
 
-void Blink(int v) {
+void Blink( int v ) {
 	digitalWrite(LED, !digitalRead(LED));
-	delay(v);
+	delay(v); 
 	digitalWrite(LED, !digitalRead(LED));
 	delay(v);
 }
-void handleRoot() {
-
-	server.send(200, "text/html", RootText);
+void handleRoot() {	
+		
+		server.send(200, "text/html", RootText);	
 }
 
 void handleNotFound() {
-
+	
 	String message = "File Not Found\n\n";
 	message += "URI: ";
 	message += server.uri();
@@ -48,14 +47,11 @@ void handleNotFound() {
 		message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
 	}
 	server.send(404, "text/plain", message);
-
+	
 }
 
 
 void setup(void) {
-
-	client.readStringUntil('\n');
-
 	pinMode(LED, OUTPUT);
 	/*server setup*/ {
 		Serial.begin(115200);
@@ -80,10 +76,10 @@ void setup(void) {
 		}
 	}	// setup
 
-		//html pages
-
+	//html pages
+	
 	webPage += "<h1>ESP8266 Web Server</h1>";
-	webPage += "<p>Socket #1 <a href=\"socket1On\"><button onclick=\"buttonFunction()\">ON</button><script>function buttonFunction() { alert(\"On\"); } </script></a>&nbsp;<a href=\"socket1Off\"><button>OFF</button></a></p>";
+	webPage+= "<p>Socket #1 <a href=\"socket1On\"><button onclick=\"buttonFunction()\">ON</button><script>function buttonFunction() { alert(\"On\"); } </script></a>&nbsp;<a href=\"socket1Off\"><button>OFF</button></a></p>";
 	webPage += "<p>Socket #2 <a href=\"socket2On\"><button>ON</button></a>&nbsp;<a href=\"socket2Off\"><button>OFF</button></a></p>";
 
 	// preparing GPIOs
@@ -107,13 +103,13 @@ void setup(void) {
 		server.send(200, "text/html", webPage);
 		Serial.println("IndexPage");
 	});
-
+	
 	server.on("/socket1On", []() {
 		server.send(200, "text/html", webPage);
 		digitalWrite(gpio0_pin, HIGH);
 		Serial.println("socket1On");
 		delay(1000);
-
+		
 	});
 
 	server.on("/socket1Off", []() {
@@ -137,11 +133,11 @@ void setup(void) {
 		delay(1000);
 	});
 
-	server.onNotFound(handleNotFound);
-	server.begin();
-	Serial.println("HTTP server started");
+		server.onNotFound(handleNotFound);
+		server.begin();
+		Serial.println("HTTP server started");
 }
-
+	
 
 void loop(void) {
 	server.handleClient();
